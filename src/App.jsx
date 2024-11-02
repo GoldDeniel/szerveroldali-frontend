@@ -1,33 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { getItems } from './CrudFunctions';
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const uri = 'http://localhost:5289/api/TodoItems';
+  const [todos, setTodos] = useState([]);
+  const [newTodoName, setNewTodoName] = useState('');
+
+  async function displayItems(uri) {
+    try {
+      const items = await getItems(uri);
+      console.log('Success:', items);
+      setTodos(items); // Update the state with fetched items
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  }
+
+  async function addItem(uri, item) {
+    try {
+      const response = await fetch(uri, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+      });
+      const data = await response.json();
+      console.log('Success:', data);
+      displayItems(uri);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  useEffect(() => {
+    displayItems(uri);
+  }, []);
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Todo List</h1>
+        <ul>
+          {
+          todos.map((todo) => (
+            <li key={todo.Id}>
+              <div className="checkbox-wrapper-11">
+                <input id="02-11" type="checkbox" name="r" value="2"/>
+                <label htmlFor="02-11">{todo.Name}</label>
+              </div>
+              <button onClick={() => deleteItem(uri, todo.Id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+        
+        
+
+        <input type="text" value={newTodoName} onChange={(e) => setNewTodoName(e.target.value)} />
+        <button onClick={() => addItem(uri, { Name: newTodoName, IsComplete: false })}>Add</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
