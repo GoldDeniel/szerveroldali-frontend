@@ -8,9 +8,9 @@ export async function getItems(uri){
   return data;
 }
 
-export function addItem(uri, item){
+export async function addItem(uri, item){
     
-    fetch(uri, {
+    await fetch(uri, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -26,9 +26,9 @@ export function addItem(uri, item){
     });
 }
 
-export function deleteItem(uri, id){
+export async function deleteItem(uri, id){
         
-    fetch(uri + id, {
+    await fetch(uri + id, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -40,9 +40,9 @@ export function deleteItem(uri, id){
     });
 }
 
-export function updateItem(uri, id, item){
+export async function updateItem(uri, id, item){
     
-    fetch(uri + id, {
+    await fetch(uri + id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
