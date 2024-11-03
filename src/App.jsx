@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getItems, updateItem } from './CrudFunctions';
+import { getItems, updateItem, addItem, deleteItem } from './CrudFunctions';
 
 function App() {
   
@@ -18,59 +18,6 @@ function App() {
     }
   }
 
-  async function addItem(uri, item) {
-    try {
-      const response = await fetch(uri, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-      });
-      const data = await response.json();
-      displayItems(uri);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
-  async function deleteItem(uri, id) {
-    try {
-      const response = await fetch(`${uri}${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      if (response.ok) {
-        displayItems(uri);
-      } else {
-        console.error('Error: Failed to delete item');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
-  async function updateItem(uri, id, item) {
-    try {
-      const response = await fetch(`${uri}${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-      });
-
-      if (response.ok) {
-        displayItems(uri);
-      }
-    }
-    catch (error) {
-      console.error('Error:', error);
-    }
-  }
   const handleLongPress = (todo) => {
     setEditTodoId(todo.Id);
     setEditTodoName(todo.Name);
@@ -128,7 +75,7 @@ function App() {
                   value="2" 
                   checked={todo.IsComplete} 
                   onChange={() => {
-                    updateItem(uri, todo.Id, {Id: todo.Id, Name: todo.Name, IsComplete: !todo.IsComplete });
+                    updateItem(uri, todo.Id, {Id: todo.Id, Name: todo.Name, IsComplete: !todo.IsComplete }).then(() => displayItems(uri));
                   }} 
                 />
                 {editTodoId === todo.Id ? (
@@ -154,23 +101,21 @@ function App() {
                   </label>
                 )}
               </div>
-              <button onClick={() => deleteItem(uri, todo.Id)}>Delete</button>
+              <button onClick={() => {
+                deleteItem(uri, todo.Id).then(() => displayItems(uri));
+                }}>Delete</button>
             </li>
           ))}
         </ul>
         
-        
-
         <input 
         type="text" 
         value={newTodoName} 
         onChange={(e) => setNewTodoName(e.target.value)}
         onKeyDown={handleNewTodoKeyDown}
-
         />
         <button onClick={() => {
-
-          addItem(uri, { Name: newTodoName, IsComplete: false })
+          addItem(uri, { Name: newTodoName, IsComplete: false }).then(() => displayItems(uri));
           setNewTodoName('');
           }}>Add</button>
       </div>

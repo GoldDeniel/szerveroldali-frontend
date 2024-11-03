@@ -8,53 +8,59 @@ export async function getItems(uri){
   return data;
 }
 
-export async function addItem(uri, item){
-    
-    await fetch(uri, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
 
-export async function deleteItem(uri, id){
-        
-    await fetch(uri + id, {
-        method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
-export async function updateItem(uri, id, item){
-    
-    await fetch(uri + id, {
+export async function updateItem(uri, id, item) {
+    try {
+      const response = await fetch(`${uri}${id}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(item)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+      });
+
+      if (response.ok) {
+        // const data = await response.json();
+        // console.log('Item updated:', data);
+      }
+    }
+    catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+export async function addItem(uri, item) {
+  try {
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
     });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
+
+export async function deleteItem(uri, id) {
+    try {
+      const response = await fetch(`${uri}${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (response.ok) {
+        
+      } else {
+        console.error('Error: Failed to delete item');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
