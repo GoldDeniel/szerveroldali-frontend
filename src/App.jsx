@@ -15,6 +15,7 @@ function App() {
       const items = await getItems(uri);
       setTodos(items);
     } catch (error) {
+      setTodos(null);
       console.error('Error fetching items:', error);
     }
   }
@@ -81,25 +82,32 @@ function App() {
     <>
       <div>
         <h1>Todo List</h1>
-        <ul>
-        {
-          todos.map((todo) => (
-            <TodoItem
-              key={todo.Id}
-              todo={todo}
-              editTodoId={editTodoId}
-              editTodoName={editTodoName}
-              handleEditChange={handleEditChange}
-              handleFocusOff={handleFocusOff}
-              handleModifyKeyDown={handleModifyKeyDown}
-              startPressTimer={startPressTimer}
-              cancelPressTimer={cancelPressTimer}
-              handleModifyCheck={handleModifyCheck}
-              handleDeleteItem={handleDeleteItem}
-            />
-          ))}
-        </ul>
         
+        {todos === null ? (
+          <p>Couldn't load the tasks (see console output)</p>
+        ) : todos.length === 0 ? (
+          <p>No tasks for today</p>
+        ) : (
+          <ul>
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.Id}
+                todo={todo}
+                editTodoId={editTodoId}
+                editTodoName={editTodoName}
+                handleEditChange={handleEditChange}
+                handleFocusOff={handleFocusOff}
+                handleModifyKeyDown={handleModifyKeyDown}
+                startPressTimer={startPressTimer}
+                cancelPressTimer={cancelPressTimer}
+                handleModifyCheck={handleModifyCheck}
+                handleDeleteItem={handleDeleteItem}
+              />
+            ))}
+          </ul>
+        )}
+        
+
         <input 
         type="text" 
         value={newTodoName} 
