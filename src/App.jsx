@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getItems, updateItem, addItem, deleteItem } from './CrudFunctions';
+import TodoItem from './TodoItem';
 
 function App() {
   
@@ -43,7 +44,7 @@ function App() {
 
   const handleNewTodoKeyDown = (e) => {
     if (e.key === 'Enter') {
-      addItem(uri, { Name: newTodoName, IsComplete: false });
+      addItem(uri, { Name: newTodoName, IsComplete: false }).then(() => displayItems(uri));
       setNewTodoName('');
     }
   };
@@ -55,6 +56,23 @@ function App() {
     }
   };
 
+  const handleDeleteItem = (id) => {
+    deleteItem(uri, id).then(() => displayItems(uri));
+  }
+
+  const handleAddItem = (item) => {
+    if (!item.Name || item.Name === '') {
+      return;
+    }
+    addItem(uri, item).then(() => displayItems(uri));
+    setNewTodoName('');
+  }
+
+  const handleModifyCheck = (todo) => {
+    updateItem(uri, todo.Id, { Id: todo.Id, Name: todo.Name, IsComplete: !todo.IsComplete }).then(() => displayItems(uri));
+  }
+
+
   useEffect(() => {
     displayItems(uri);
   }, []);
@@ -64,47 +82,21 @@ function App() {
       <div>
         <h1>Todo List</h1>
         <ul>
-          {
+        {
           todos.map((todo) => (
-            <li key={todo.Id}>
-              <div className="checkbox-wrapper-11">
-              <input 
-                  id={`checkbox-${todo.Id}`} 
-                  type="checkbox" 
-                  name="r" 
-                  value="2" 
-                  checked={todo.IsComplete} 
-                  onChange={() => {
-                    updateItem(uri, todo.Id, {Id: todo.Id, Name: todo.Name, IsComplete: !todo.IsComplete }).then(() => displayItems(uri));
-                  }} 
-                />
-                {editTodoId === todo.Id ? (
-                  <input 
-                    type="text" 
-                    className='edit-input'
-                    value={editTodoName} 
-                    onChange={handleEditChange} 
-                    onBlur={() => handleFocusOff()}
-                    onKeyDown={handleModifyKeyDown(todo)}
-                    autoFocus
-                  />
-                ) : (
-                  <label 
-                    htmlFor={`checkbox-${todo.Id}`} 
-                    onMouseDown={() => startPressTimer(todo)}
-                    onMouseUp={cancelPressTimer}
-                    onMouseLeave={cancelPressTimer}
-                    onTouchStart={() => startPressTimer(todo)}
-                    onTouchEnd={cancelPressTimer}
-                  >
-                    {todo.Name}
-                  </label>
-                )}
-              </div>
-              <button onClick={() => {
-                deleteItem(uri, todo.Id).then(() => displayItems(uri));
-                }}>Delete</button>
-            </li>
+            <TodoItem
+              key={todo.Id}
+              todo={todo}
+              editTodoId={editTodoId}
+              editTodoName={editTodoName}
+              handleEditChange={handleEditChange}
+              handleFocusOff={handleFocusOff}
+              handleModifyKeyDown={handleModifyKeyDown}
+              startPressTimer={startPressTimer}
+              cancelPressTimer={cancelPressTimer}
+              handleModifyCheck={handleModifyCheck}
+              handleDeleteItem={handleDeleteItem}
+            />
           ))}
         </ul>
         
@@ -115,8 +107,7 @@ function App() {
         onKeyDown={handleNewTodoKeyDown}
         />
         <button onClick={() => {
-          addItem(uri, { Name: newTodoName, IsComplete: false }).then(() => displayItems(uri));
-          setNewTodoName('');
+          handleAddItem({ Name: newTodoName, IsComplete: false });
           }}>Add</button>
       </div>
     </>
