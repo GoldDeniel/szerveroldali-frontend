@@ -10,12 +10,12 @@ function App() {
 
         <div className="modeSwitchContainer">
             <h2>Todo</h2>
-            <div class="checkbox-wrapper-63 modeSwitchContainer">
-            <label class="switch">
+            <div className="checkbox-wrapper-63 modeSwitchContainer">
+            <label className="switch">
                 <input type="checkbox"  onClick={() => {
                     setIsTodoShown(!isTodoShown);
                     }}/>
-                <span class="slider"></span>
+                <span className="slider"></span>
             </label>
             </div>
             <h2>Book Store</h2>
