@@ -53,7 +53,7 @@ function App() {
   const handleModifyKeyDown = (todo) => (e) => {
     if (e.key === 'Enter') {
       handleFocusOff(todo);
-      updateItem(uri, todo.Id, { Id: todo.Id, Name: editTodoName, IsComplete: todo.IsComplete });
+      updateItem(uri, todo.Id, { Id: todo.Id, Name: editTodoName, IsComplete: todo.IsComplete }).then(() => displayItems(uri));
     }
   };
 
@@ -80,13 +80,13 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className='siteDiv'>
         <h1>Todo List</h1>
         
         {todos === null ? (
-          <p>Couldn't load the tasks (see console output)</p>
+          <p className='error'>Couldn't load the tasks (see console output)</p>
         ) : todos.length === 0 ? (
-          <p>No tasks for today</p>
+          <p className='notasks'>No tasks for today</p>
         ) : (
           <ul>
             {todos.map((todo) => (
