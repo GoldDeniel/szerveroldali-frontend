@@ -61,6 +61,17 @@ li {
   transition: transform 0.3s ease;
 }
 
+.bookToModifyDiv{
+  background-color: #1e1e1e;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
 li:hover {
   transform: scale(1.05);
 }
