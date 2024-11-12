@@ -1,27 +1,28 @@
 function BookItem({
   book,
   handleDeleteItem,
-  setIsModifying,
+  handleModifyBook,
   isModifying,
-  setBookToModify,
 }) {
   return (
     <li>
-      <h2>{book.Name}</h2>
-      <p>{book.Category}</p>
-      <p>{book.Author}</p>
-      <p>{book.Price}</p>
+      <h2 className="book-item-spacing">{book.Name}</h2>
+      <p className="book-item-spacing">{book.Category}</p>
+      <p className="book-item-spacing">{book.Author}</p>
+      <p className="book-item-spacing">{book.Price}</p>
       {!isModifying ? (
         <button
+          className="book-item-spacing-button"
           onClick={() => {
-            setIsModifying(true);
-            setBookToModify(book);
+            handleModifyBook(book);
           }}
         >
           Edit
         </button>
       ) : null}
-      <button onClick={() => handleDeleteItem(book.Id)}>Delete</button>
+      <button
+       className="book-item-spacing-button"
+       onClick={() => handleDeleteItem(book.Id)}>Delete</button>
     </li>
   );
 }

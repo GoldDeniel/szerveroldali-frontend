@@ -543,6 +543,15 @@ input[type="text"]:focus {
 
   }
 
+  .book-item-spacing{
+    margin: auto;
+    max-width: 15%;
+    overflow: break-word;
+    
+  }
+  .book-item-spacing-button{
+    margin: 0.3rem;
+  }
   /* The slider */
   .checkbox-wrapper-63 .slider {
     position: absolute;

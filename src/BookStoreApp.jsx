@@ -37,6 +37,16 @@ function BookStoreApp() {
     });
   };
 
+  const handleModifyBook = (book) => {
+    setNewBookName(book.Name);
+    setNewBookAuthor(book.Author);
+    setNewBookPrice(book.Price);
+    setNewBookCategory(book.Category);
+    
+    setIsModifying(true);
+    setBookToModify(book);
+  };
+
   const handleAddItem = (book) => {
     if (
       !book.Name ||
@@ -107,6 +117,7 @@ function BookStoreApp() {
         />
         {isModifying && bookToModify ? (
           <button
+          className="book-item-spacing-button"
             onClick={() => {
 
                 let new_book_name = newBookName ? newBookName : bookToModify.Name;
@@ -134,6 +145,7 @@ function BookStoreApp() {
           </button>
         ) : (
           <button
+           className="book-item-spacing-button"
             onClick={() => {
               handleAddItem({
                 Name: newBookName,
@@ -150,10 +162,10 @@ function BookStoreApp() {
 
       {isModifying && bookToModify ? (
         <div className="bookToModifyDiv">
-          <h2>{bookToModify.Name}</h2>
-          <p>{bookToModify.Category}</p>
-          <p>{bookToModify.Author}</p>
-          <p>{bookToModify.Price}</p>
+          <h2 className="book-item-spacing">{bookToModify.Name}</h2>
+          <p className="book-item-spacing">{bookToModify.Category}</p>
+          <p className="book-item-spacing">{bookToModify.Author}</p>
+          <p className="book-item-spacing">{bookToModify.Price}</p>
         </div>
       ) : (
         <div>
@@ -164,9 +176,8 @@ function BookStoreApp() {
                 key={index}
                 book={book}
                 handleDeleteItem={handleDeleteItem}
-                setIsModifying={setIsModifying}
+                handleModifyBook={handleModifyBook}
                 isModifying={isModifying}
-                setBookToModify={setBookToModify}
               />
             ))}
           </ul>
