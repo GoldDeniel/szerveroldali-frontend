@@ -7,10 +7,13 @@ function BookStoreApp() {
   const [newBookAuthor, setNewBookAuthor] = React.useState("");
   const [newBookPrice, setNewBookPrice] = React.useState("");
   const [newBookCategory, setNewBookCategory] = React.useState("");
-  const [books, setBooks] = React.useState([]);
 
+  const [books, setBooks] = React.useState([]);
+  const [filteredBooks, setFilteredBooks] = React.useState([]);
   const [isModifying, setIsModifying] = React.useState(false);
   const [bookToModify, setBookToModify] = React.useState(null);
+
+  const [searchBoxText , setSearchBoxText] = React.useState("");
 
   const handleNewBookKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -47,6 +50,15 @@ function BookStoreApp() {
     setBookToModify(book);
   };
 
+  const handleSearch = (text) => {
+    setSearchBoxText(text);
+    // text is in name or author or category
+    setFilteredBooks(books.filter(book => 
+      book.Name.toLowerCase().includes(text.toLowerCase()) ||
+      book.Author.toLowerCase().includes(text.toLowerCase()) ||
+      book.Category.toLowerCase().includes(text.toLowerCase())));
+  }
+
   const handleAddItem = (book) => {
     if (
       !book.Name ||
@@ -59,6 +71,7 @@ function BookStoreApp() {
       book.Category === ""
     ) {
       console.error("Book name, author and price are required");
+      alert("Book name, author and price are required");
       return;
     }
 
@@ -76,6 +89,9 @@ function BookStoreApp() {
   useEffect(() => {
     getItems(uri).then((data) => {
       setBooks(data);
+      setFilteredBooks(data);
+    }).catch((error) => {
+      alert(error);
     });
   }, []);
 
@@ -144,19 +160,31 @@ function BookStoreApp() {
             Save
           </button>
         ) : (
-          <button
-           className="book-item-spacing-button"
+          <>
+          
+            <button
+            className="book-item-spacing-button"
             onClick={() => {
               handleAddItem({
                 Name: newBookName,
                 Author: newBookAuthor,
                 Price: newBookPrice,
                 Category: newBookCategory,
-              });
-            }}
-          >
-            Add
-          </button>
+                });
+              }}
+              >
+              Add
+            </button>
+            <legend>
+            <hr/>
+            <input
+              type="text"
+              value={searchBoxText}
+              placeholder="Search"
+              onChange={(e) => handleSearch(e.target.value)}
+              />
+              </legend>
+          </>
         )}
       </div>
 
@@ -171,7 +199,7 @@ function BookStoreApp() {
         <div>
           <h2>Books</h2>
           <ul>
-            {books.map((book, index) => (
+            {filteredBooks.map((book, index) => (
               <BookItem
                 key={index}
                 book={book}
