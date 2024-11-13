@@ -105,7 +105,7 @@ button:hover {
 }
 
 /* Inputs */
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="number"], input[type="password"] {
   background-color: #1e1e1e;
   color: #e0e0e0;
   border: 1px solid #444;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TodoApp from "./TodoApp";
-import BookStoreApp from "./BookStoreApp";
+import UserApp from "./UserApp";
 function App() {
 
     const [isTodoShown, setIsTodoShown] = useState(false);
@@ -24,7 +24,7 @@ function App() {
         
         {!isTodoShown ? 
         <TodoApp /> : 
-        <BookStoreApp/>}
+        <UserApp/>}
     </div>
 
   );

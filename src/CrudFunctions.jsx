@@ -47,12 +47,15 @@ export async function addItem(uri, item) {
 
 
 export async function deleteItem(uri, id) {
+  console.log("Deleting this fella: " + uri + id);
     try {
       const response = await fetch(`${uri}${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         }
+      }).catch((error) => {
+        console.error('Error:', error);
       });
   
       if (response.ok) {
