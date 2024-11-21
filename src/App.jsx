@@ -1,36 +1,38 @@
 import { useState } from "react";
 import TodoApp from "./TodoApp";
 import UserApp from "./UserApp";
+import BookStoreApp from "./BookStoreApp";
 function App() {
-
-    const [isTodoShown, setIsTodoShown] = useState(false);
-
+  const [shownPage, setShownPage] = useState("UserApp");
   return (
     <div>
-
-        <div className="modeSwitchContainer">
-            <h2>Todo</h2>
-            <div className="checkbox-wrapper-63 modeSwitchContainer">
-            <label className="switch">
-                <input type="checkbox"  onClick={() => {
-                    setIsTodoShown(!isTodoShown);
-                    }}/>
-                <span className="slider"></span>
-            </label>
-            </div>
-            <h2>Book Store</h2>
-        </div>
-
-        
-        {!isTodoShown ? 
-        <TodoApp /> : 
-        <UserApp/>}
+      <div  className="page-buttons-container">
+        <button
+        className="page-button"
+          onClick={() => {
+            setShownPage("Todo");
+          }}
+        >
+          Todo
+        </button>
+        <button className="page-button" onClick={() => {
+            setShownPage("UserApp");
+          }}>User App</button>
+        <button className="page-button" onClick={() => {
+            setShownPage("BookStoreApp");
+          }}>BookStore App</button>
+      </div>
+      <div>
+        {shownPage == "UserApp" ? (
+          <UserApp />
+        ) : shownPage == "BookStoreApp" ? (
+          <BookStoreApp />
+        ) : (
+          <TodoApp />
+        )}
+      </div>
     </div>
-
   );
 }
 
 export default App;
-
-
-

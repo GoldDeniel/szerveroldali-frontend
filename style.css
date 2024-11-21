@@ -165,6 +165,8 @@ input[type="text"]:focus {
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
+  margin-inline: 1rem;
+
 }
 
   .siteDiv {
@@ -525,12 +527,14 @@ input[type="text"]:focus {
   .checkbox-wrapper-63 input[type="checkbox"] {
     visibility: hidden;
     display: none;
+    
   }
 
   .checkbox-wrapper-63 *,
   .checkbox-wrapper-63 ::after,
   .checkbox-wrapper-63 ::before {
     box-sizing: border-box;
+    
   }
 
   /* The switch - the box around the slider */
@@ -584,4 +588,12 @@ input[type="text"]:focus {
   .checkbox-wrapper-63 input:checked + .slider::before {
     transform: translateX(2em);
     background: lightgreen;
+  }
+
+  .page-buttons-container {
+    align-items: center;
+    text-align: center;
+  }
+  .page-button {
+    margin: 2rem;
   }

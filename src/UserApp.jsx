@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addItem, deleteItem, getItems } from "./CrudFunctions";
 import React from "react";
 
 function UserApp() {
-  const uri = "http://localhost:5289/api/User/";
+  const [uri, setUri] = useState("http://localhost:5289/api/User/");
   const [name, setName] = React.useState(null);
   const [password, setPassword] = React.useState(null);
   const [myId, setMyId] = React.useState(null);
@@ -11,89 +11,42 @@ function UserApp() {
   const [loginMessage, setLoginMessage] = React.useState("");
   const [users, setUsers] = React.useState([]);
   const [friends, setFriends] = React.useState([]);
-  function handleLogin() {
-    let URI = uri + "login";
-    const response = fetch(URI, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ Name: name, Secret: password }),
-        })
-        .then(async (response) => {
-            if (response.ok) {
-            setIsSuccessfulLogin(true);
-            await response.json().then((d) => {
-                setLoginMessage("Login successful");
-                setMyId(d.Id);
-                console.log("My id: " + myId);
-                handleGetFriends();
-            });
-            } else {
-            setIsSuccessfulLogin(false);
-            setLoginMessage("Login failed");
-            setMyId(null);
-            }
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-  }
-  function handleDeleteUser(id) {
-    deleteItem(uri, id).then(() => {
-      refreshData();
-    });
-  }
-  function handleRegister() {
-    let URI = uri + "register";
-    addItem(URI, { Name: name, Secret: password }).then(() => {
-      refreshData();
-    });
-  }
-  function handleRemoveFriend(friendId) {
-    if (!myId) {
-        return;
-    }
-    let URI = uri + "removefriend/" + myId + "/" + friendId;
-    addItem(URI).then(() => {
-        handleGetFriends();
-    });
-    }
-  function handleGetFriends() {
-    console.log("Getting friends");
-    if (!myId) {
-      return;
-    }
-    let URI = uri + "friends/" + myId;
-    getItems(URI).then((data) => {
-        console.log("Friends:");
-      setFriends(data);
-    });
+ 
+  function updateFriends(){
+    const URI = uri + "/"
   }
 
-  function refreshData() {
-    handleGetFriends();
-    getItems(uri).then((data) => {
-        setUsers(data);
-        }
-    );
+  function updateUsers(){
+
   }
-  function handleAddFriend(friendId) {
-    if (!isSuccessfulLogin || !myId || !friendId) {
-      return;
-    }
-    let URI = uri + "addfriend/" + myId + "/" + friendId;
-    addItem(URI, { id: myId, friendId: friendId }).then(() => {
-      handleGetFriends();
-    });
+
+
+  function updateData(){
+    setFriends([]);
+    setUsers([]);
+
+
   }
 
   useEffect(() => {
-    refreshData();
-  }, [myId]);
+    // update data
+
+  }, [myId, uri]);
 
   return (
     <div>
+      <div className="modeSwitchContainer">
+        {uri}
+        <br/>
+            <div className="checkbox-wrapper-63 modeSwitchContainer">
+            <label className="switch">
+                <input type="checkbox"  onClick={() => {
+                    setIsTodoShown(!isTodoShown);
+                    }}/>
+                <span className="slider"></span>
+            </label>
+            </div>
+        </div>
       <div>
         <h1>Login</h1>
 
