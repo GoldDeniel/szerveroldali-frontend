@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getItems, updateItem, postItem, deleteItem } from './CrudFunctions';
+import { getItems, updateItem, postItem, deleteItem } from '../utils/CrudFunctions';
 import TodoItem from './TodoItem';
-import { ConnectionStrings } from './ConnectionStrings';
+import { ConnectionStrings } from '../utils/ConnectionStrings';
 
 function TodoApp() {
   

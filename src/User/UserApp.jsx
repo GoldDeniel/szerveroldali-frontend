@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { postItem, deleteItem, getItems } from "./CrudFunctions";
+import { postItem, deleteItem, getItems } from "../utils/CrudFunctions";
 import React from "react";
-import { ConnectionStrings } from "./ConnectionStrings";
+import { ConnectionStrings } from "../utils/ConnectionStrings";
 
 function UserApp() {
   const [uri, setUri] = useState(ConnectionStrings.UserAppApiUri);

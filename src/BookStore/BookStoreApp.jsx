@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { ConnectionStrings } from "./ConnectionStrings";
-import { updateItem, postItem, deleteItem, getItems } from "./CrudFunctions";
+import { ConnectionStrings } from "../utils/ConnectionStrings";
+import { updateItem, postItem, deleteItem, getItems } from "../utils/CrudFunctions";
 import BookItem from "./BookItem";
 function BookStoreApp() {
   const uri = ConnectionStrings.BookStoreUri;

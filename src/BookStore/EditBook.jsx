@@ -1,4 +1,4 @@
-import { updateItem } from "./CrudFunctions";
+import { updateItem } from "../utils/CrudFunctions";
 import BookItem from "./BookItem";
 import React from "react";
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import TodoApp from "./TodoApp";
-import UserApp from "./UserApp";
-import BookStoreApp from "./BookStoreApp";
+import TodoApp from "./Todo/TodoApp";
+import UserApp from "./User/UserApp";
+import BookStoreApp from "./BookStore/BookStoreApp";
 function App() {
   const [shownPage, setShownPage] = useState("UserApp");
   return (
