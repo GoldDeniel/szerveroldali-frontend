@@ -39,7 +39,7 @@ export async function postItem(uri, item) {
       body: JSON.stringify(item)
     });
 
-    if (!response.ok) { // throw error code if response is not ok
+    if (!response.ok) { 
       throw new Error(response.status);
     }
 

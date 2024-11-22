@@ -27,16 +27,28 @@ function UserApp() {
   }
 
   function updateFriends() {
+    // ez nagyon csunya hiba
     const URI = uri + "friends/" + myId;
     getItems(URI).then((data) => {
       console.log("Friends:", data);
       setFriends(data);
+      console.log("Friends:", friends);
     }
     ).catch((error) => {
       console.error("Error getting friends items:", error);
     }
     );
+    
   }
+
+  const handleTextInputSubmitLogin = (e) => {
+    if (e.key === 'Enter') {
+      if (name && password) {
+        login();
+      }
+    }
+  };
+
 
   function updateUsers() {
     getItems(uri).then((data) => {
@@ -52,7 +64,7 @@ function UserApp() {
         if (data) {
           setMyId(data.Id);
           setIsSuccessfulLogin(true);
-          setLoginMessage("Login successful");
+          setLoginMessage("Login successful as " + data.Name);
           clearFields();
         } else {
           setIsSuccessfulLogin(false);
@@ -72,13 +84,14 @@ function UserApp() {
         updateData();
       } else {
         setIsSuccessfulLogin(false);
-        setLoginMessage("Registration failed: Invalid username or password");
+        setLoginMessage("Registration failed: This username is already taken");
       }
     });
   }
 
   function handleAddFriend(friendId) {
     const URI = uri + "addfriend/" + myId + "/" + friendId;
+    console.log("URI:", URI);
     postItem(URI, {}).then((data) => {
       console.log("Friend added:", data);
       updateData();
@@ -92,6 +105,8 @@ function UserApp() {
       updateData();
     });
   }
+
+  
 
   function handleDeleteUser(userId) {
     deleteItem(uri, userId).then(() => {
@@ -153,6 +168,7 @@ function UserApp() {
               onChange={(e) => {
                 setName(e.target.value);
               }}
+              onKeyDown={handleTextInputSubmitLogin}
             />
             <input
               type="password"
@@ -161,6 +177,7 @@ function UserApp() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              onKeyDown={handleTextInputSubmitLogin}
             />
             <button
               className="book-item-spacing-button"
@@ -201,18 +218,20 @@ function UserApp() {
       <h1>Friends</h1>
 
       <ul>
-        {friends.map((friend) => (
-          <li key={friend.Id}>
-            {friend.Name}
-            <button
-              onClick={() => {
-                handleRemoveFriend(friend.Id);
-              }}
-            >
-              Remove Friend
-            </button>
-          </li>
-        ))}
+        {
+          friends.map((friend) => (
+            <li key={friend.Id}>
+              {friend.Name}
+              <button
+                onClick={() => {
+                  handleRemoveFriend(friend.Id);
+                }}
+              >
+                Remove Friend
+              </button>
+            </li>
+          ))
+        }
       </ul>
 
       <h1>Users</h1>
