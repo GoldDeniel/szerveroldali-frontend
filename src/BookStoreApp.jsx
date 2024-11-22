@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { updateItem, addItem, deleteItem, getItems } from "./CrudFunctions";
+import { updateItem, postItem, deleteItem, getItems } from "./CrudFunctions";
 import BookItem from "./BookItem";
 function BookStoreApp() {
   const uri = "http://localhost:5289/api/Books/";
@@ -36,6 +36,7 @@ function BookStoreApp() {
     deleteItem(uri, id).then(() => {
       getItems(uri).then((data) => {
         setBooks(data);
+        setFilteredBooks(data);
       });
     });
   };
@@ -75,7 +76,7 @@ function BookStoreApp() {
       return;
     }
 
-    addItem(uri, book)
+    postItem(uri, book)
       .then(() => {
         getItems(uri).then((data) => {
           setBooks(data);

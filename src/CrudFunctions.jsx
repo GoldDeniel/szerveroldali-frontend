@@ -2,7 +2,7 @@
 export async function getItems(uri){
     const response = await fetch(uri);
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw response.error;
   }
   const data = await response.json();
   return data;
@@ -29,7 +29,7 @@ export async function updateItem(uri, id, item) {
     }
   }
 
-export async function addItem(uri, item) {
+export async function postItem(uri, item) {
   try {
     const response = await fetch(uri, {
       method: 'POST',
@@ -38,10 +38,27 @@ export async function addItem(uri, item) {
       },
       body: JSON.stringify(item)
     });
+
+    if (!response.ok) { // throw error code if response is not ok
+      throw new Error(response.status);
+    }
+
     const data = await response.json();
+    console.log('Item posted:', data);
     return data;
   } catch (error) {
-    console.error('Error:', error);
+    if (error.message === '409') {
+      Error('Error: Item already exists');
+    }
+    else if (error.message === '400') {
+      Error('Error: Invalid item');
+    }
+    else if (error.message === '401') {
+      Error('Error: Unauthorized');
+    }
+    else {
+      console.error('Error:', error);
+    }
   }
 }
 

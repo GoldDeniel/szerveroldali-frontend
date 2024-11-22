@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getItems, updateItem, addItem, deleteItem } from './CrudFunctions';
+import { getItems, updateItem, postItem, deleteItem } from './CrudFunctions';
 import TodoItem from './TodoItem';
 
 function TodoApp() {
@@ -45,7 +45,7 @@ function TodoApp() {
 
   const handleNewTodoKeyDown = (e) => {
     if (e.key === 'Enter') {
-      addItem(uri, { Name: newTodoName, IsComplete: false }).then(() => displayItems(uri));
+      postItem(uri, { Name: newTodoName, IsComplete: false }).then(() => displayItems(uri));
       setNewTodoName('');
     }
   };
@@ -65,7 +65,7 @@ function TodoApp() {
     if (!item.Name || item.Name === '') {
       return;
     }
-    addItem(uri, item).then(() => displayItems(uri));
+    postItem(uri, item).then(() => displayItems(uri));
     setNewTodoName('');
   }
 

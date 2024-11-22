@@ -1,5 +1,4 @@
 #!/bin/python3
-# Load data form json file and print it
 
 import json
 import requests
