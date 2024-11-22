@@ -30,6 +30,7 @@ function UserApp() {
     const URI = uri + "friends/" + myId;
     getItems(URI).then((data) => {
       console.log("Friends:", data);
+      setFriends(data);
     }
     ).catch((error) => {
       console.error("Error getting friends items:", error);
@@ -73,6 +74,28 @@ function UserApp() {
         setIsSuccessfulLogin(false);
         setLoginMessage("Registration failed: Invalid username or password");
       }
+    });
+  }
+
+  function handleAddFriend(friendId) {
+    const URI = uri + "addfriend/" + myId + "/" + friendId;
+    postItem(URI, {}).then((data) => {
+      console.log("Friend added:", data);
+      updateData();
+    });
+  }
+
+  function handleRemoveFriend(friendId) {
+    const URI = uri + "removefriend/" + myId + "/" + friendId;
+    postItem(URI, {}).then((data) => {
+      console.log("Friend removed:", data);
+      updateData();
+    });
+  }
+
+  function handleDeleteUser(userId) {
+    deleteItem(uri, userId).then(() => {
+      updateData();
     });
   }
 

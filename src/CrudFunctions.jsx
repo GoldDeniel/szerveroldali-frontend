@@ -20,8 +20,8 @@ export async function updateItem(uri, id, item) {
       });
 
       if (response.ok) {
-        // const data = await response.json();
-        // console.log('Item updated:', data);
+        const data = await response.json();
+        console.log('Item updated:', data);
       }
     }
     catch (error) {
