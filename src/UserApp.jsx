@@ -237,20 +237,25 @@ function UserApp() {
       <h1>Users</h1>
       <ul>
         {users.map((user) =>
+          // hide the user from users
           user.Id === myId ? null : (
             <li key={user.Id}>
               {user.Name}
-              {friends.find((friend) => friend.Id === user.Id) ? (
-                <span> (Friend)</span>
-              ) : (
-                <button
-                  onClick={() => {
-                    handleAddFriend(user.Id);
-                  }}
-                >
-                  Add Friend
-                </button>
-              )}
+              {
+                // is user logged in
+                myId == null ? null : friends.find((friend) => friend.Id === user.Id) ? (
+                  <span> (Friend)</span>
+                ) : (
+                  <button
+                    onClick={() => {
+                      handleAddFriend(user.Id);
+                    }}
+                  >
+                    Add Friend
+                  </button>
+                )}
+              
+              
 
               <button
                 onClick={() => {

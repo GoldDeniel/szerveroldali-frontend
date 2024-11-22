@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import { updateItem, postItem, deleteItem, getItems } from "./CrudFunctions";
 import BookItem from "./BookItem";
 function BookStoreApp() {
@@ -95,6 +96,12 @@ function BookStoreApp() {
       alert(error);
     });
   }, []);
+
+  useEffect(() => {
+    setFilteredBooks(books);
+  }
+  , [books]);
+
 
   return (
     <div>
@@ -207,6 +214,7 @@ function BookStoreApp() {
                 handleDeleteItem={handleDeleteItem}
                 handleModifyBook={handleModifyBook}
                 isModifying={isModifying}
+                
               />
             ))}
           </ul>
