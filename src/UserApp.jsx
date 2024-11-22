@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { postItem, deleteItem, getItems } from "./CrudFunctions";
 import React from "react";
+import { ConnectionStrings } from "./ConnectionStrings";
 
 function UserApp() {
-  const [uri, setUri] = useState("http://localhost:5289/api/User/");
+  const [uri, setUri] = useState(ConnectionStrings.UserAppApiUri);
 
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -141,11 +142,11 @@ function UserApp() {
               type="checkbox"
               onChange={(e) => {
                 if (e.target.checked) {
-                  setUri("http://localhost:5289/api/BetterUser/");
+                  setUri(ConnectionStrings.BetterUserAppApiUri);
                   logout();
                   clearFields();
                 } else {
-                  setUri("http://localhost:5289/api/User/");
+                  setUri(ConnectionStrings.UserAppApiUri);
                   logout();
                   clearFields();
                 }

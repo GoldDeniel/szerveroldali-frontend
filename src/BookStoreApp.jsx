@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-
+import { ConnectionStrings } from "./ConnectionStrings";
 import { updateItem, postItem, deleteItem, getItems } from "./CrudFunctions";
 import BookItem from "./BookItem";
 function BookStoreApp() {
-  const uri = "http://localhost:5289/api/Books/";
+  const uri = ConnectionStrings.BookStoreUri;
+  
   const [newBookName, setNewBookName] = React.useState("");
   const [newBookAuthor, setNewBookAuthor] = React.useState("");
   const [newBookPrice, setNewBookPrice] = React.useState("");

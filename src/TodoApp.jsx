@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getItems, updateItem, postItem, deleteItem } from './CrudFunctions';
 import TodoItem from './TodoItem';
+import { ConnectionStrings } from './ConnectionStrings';
 
 function TodoApp() {
   
-  const uri = 'http://localhost:5289/api/TodoItems/';
+  const uri = ConnectionStrings.TodoAppApiUri;
   const [todos, setTodos] = useState([]);
   const [newTodoName, setNewTodoName] = useState('');
   const [editTodoId, setEditTodoId] = useState(null);
